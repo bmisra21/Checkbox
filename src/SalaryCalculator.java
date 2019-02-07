@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,20 +25,19 @@ public class SalaryCalculator {
 		myFrame.add(label2);
 		
 		JLabel salary = new JLabel("Annual Salary: $");
-		salary.setBounds(130, 150, 125, 25);
+		salary.setBounds(130, 150, 300, 25);
 		myFrame.add(salary);
 		
-		JTextField name = new JTextField();
-		name.setBounds(100, 10, 200, 30);
-		myFrame.add(name);
+		JTextField rate = new JTextField();
+		rate.setBounds(100, 10, 200, 30);
+		myFrame.add(rate);
 		
-		JTextField num = new JTextField();
-		num.setBounds(100, 75, 200, 30);
-		myFrame.add(num);
+		JTextField weeks = new JTextField();
+		weeks.setBounds(100, 75, 200, 30);
+		myFrame.add(weeks);
 		
-		JCheckBox box  = new JCheckBox("Full Time");
+		JCheckBox box  = new JCheckBox("Full Time", false);
 		box.setBounds(10, 120, 125, 25 );
-		box.setSelected(false);
 		myFrame.add(box);
 		
 		
@@ -48,10 +48,22 @@ public class SalaryCalculator {
 				{
 					public void actionPerformed(ActionEvent e)
 					{
-						label1.setText("Name: " +  name.getText());
-						label2.setText("Number: " + num.getText());
-						name.setText("");
-						num.setText("");
+						if (box.isSelected())
+						{
+							double annualSal = Double.parseDouble(rate.getText()) * 40 * 52;
+							NumberFormat formatter = NumberFormat.getCurrencyInstance();
+							salary.setText("Annual Salary: " + formatter.format(annualSal));
+							rate.setText("");
+							weeks.setText("");
+						}
+						else
+						{
+							double annualSal = Double.parseDouble(rate.getText()) * Double.parseDouble(weeks.getText()) * 52;
+							NumberFormat formatter = NumberFormat.getCurrencyInstance();
+							salary.setText("Annual Salary: " + formatter.format(annualSal));
+							rate.setText("");
+							weeks.setText("");
+						}
 					}
 
 				}); 
